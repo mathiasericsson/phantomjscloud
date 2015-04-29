@@ -1,0 +1,44 @@
+<?php
+
+/**
+ * Implementation of hook_rules_action_info().
+ */
+
+function phantomjscloud_rules_action_info() {
+  return array(
+    'phantomjscloud_get_screenshot' => array(
+      'label' => t('Get a screenshot from URL on node'),
+      'group' => t('PhantomJS'),
+      'parameter' => array(
+        'nid' => array(
+          'type' => 'node',
+          'label' => t('nid'),
+          'description' => t('The nid of the node you want to get screenshot from'),
+        ),
+      ),
+    ),
+  );
+}
+
+/*
+* Callback function for rules action hook
+* */
+function phantomjscloud_get_screenshot($node){
+
+
+  $api_key = '6e3820e5ac053aece8589b7c9d003e229c6ad3b2';
+  $phantomjscloud_URL = 'http://api.phantomjscloud.com/single/browser/v1/'. $api_key .'/';
+
+  $target_URL = 'http://google.se';
+  $load_images = 'true';
+  $viewport_size = '{"width":1280,"height":720,+"zoomFactor":1.0+}';
+  $image_type = 'png';
+
+  $url = $phantomjscloud_URL . '?targetUrl=' . $target_URL . '&loadImages=' . $load_images . '&viewportSize=' . $viewport_size  . '&requestType=' . $image_type;
+
+  //Gets file and stores file in sites/default/files
+  system_retrieve_file($url);
+
+  dpm('Screenshot stored in files folder');
+
+}

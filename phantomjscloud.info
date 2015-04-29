@@ -1,0 +1,3 @@
+name = Phanotomjscloud
+description = A module retrives and stores a screendump from a specified domain
+core = 7.x
